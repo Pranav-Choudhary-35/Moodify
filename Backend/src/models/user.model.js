@@ -17,7 +17,8 @@ email:{
 password:{
      type:String,
     required:[true,"Username is required"],
-    unique:[true,"Username is already exist"] 
+    unique:[true,"Username is already exist"],
+    select:false
 }
 
 })

@@ -2,7 +2,7 @@ const userModel=require('../models/user.model');
 const jwt =require('jsonwebtoken');
 require('dotenv').config();
 const bcrypt=require('bcrypt')
-
+const blacklistModel=require('../models/blacklist.model');
 
 
 
@@ -78,7 +78,7 @@ const user=await userModel.findOne({
         {username},
         {email}
     ]
-})
+}).select('+password');
 
 if(!user){
     re.status(401).json({
@@ -128,13 +128,50 @@ res.status(201).json({
 
 }
 
+//get-me api
+
+async function getMeController(req,res){
+
+    const userId=req.user.id;
+
+    const user=await userModel.findById(userId);
+
+    if(!user){
+        res.status(404).json({
+            message:"User not found"
+        })
+    }
+
+    res.status(200).json({
+        user:{
+            id:user._id,
+            username:user.username,
+            email:user.email
+        }
+    })
+
+}
 
 
 
+async function logoutController(req,res){
 
+    const token=req.cookies.token;
 
+    res.clearCookie("token");
+
+await blacklistModel.create({
+    token:token
+})
+
+res.status(201).json({
+    message:"User logout successfully"
+
+})
+
+}
 
 module.exports={
     loginController,
-    registerController
+    registerController,getMeController,logoutController
 }
