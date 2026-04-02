@@ -13,10 +13,10 @@ app.use(cors({
 
 // Auth Api Router
 const Router=require('./routes/auth.router');
-
-
-
 app.use('/api/auth',Router);
+
+const songRouter=require('./routes/song.routes');
+app.use('/api/songs',songRouter);
 
 
 
