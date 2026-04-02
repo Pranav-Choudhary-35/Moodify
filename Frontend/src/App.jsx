@@ -1,10 +1,19 @@
-import FaceExpression from "./features/Expression/FaceExpression"
+import {RouterProvider} from 'react-router'
+import {router} from './app.routes'
+import './features/shared/styles/global.scss'
+import { AuthProvider } from './features/auth/auth.context'
+import { useState } from 'react'
+
 
 function App() {
-  
+
+  const [user,setUser]=useState(null);
+  const [loading,setLoading]=useState(true);
 
   return (
-  <FaceExpression/>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   )
 }
 

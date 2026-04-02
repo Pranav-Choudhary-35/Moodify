@@ -3,7 +3,7 @@ const jwt =require('jsonwebtoken');
 require('dotenv').config();
 const bcrypt=require('bcrypt')
 const blacklistModel=require('../models/blacklist.model');
-
+const redis=require('../config/cache');
 
 
 //register controller Api
@@ -81,7 +81,7 @@ const user=await userModel.findOne({
 }).select('+password');
 
 if(!user){
-    re.status(401).json({
+    res.status(401).json({
         message:"Invalid Credentials"
     })
 }
@@ -160,9 +160,8 @@ async function logoutController(req,res){
 
     res.clearCookie("token");
 
-await blacklistModel.create({
-    token:token
-})
+  await  redis.set(token,Date.now().toString(),"EX",60*60);
+
 
 res.status(201).json({
     message:"User logout successfully"

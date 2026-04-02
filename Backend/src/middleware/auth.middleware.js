@@ -1,6 +1,7 @@
 const jwt =require('jsonwebtoken');
 require('dotenv').config();
-
+const redis=require('../config/cache');
+const blacklistModel=require('../models/blacklist.model');
 
 async function authUser(req,res,next) {
 
@@ -11,6 +12,16 @@ async function authUser(req,res,next) {
             message:"Unauthorized"
         })
     }
+
+   const isTokenBlacklisted=await redis.get(token);
+
+   if(isTokenBlacklisted){
+    return res.status(401).json({
+        message:"Token is blacklisted. Please login again."
+    })
+   }
+
+
 
  try{   
 const decoded = jwt.verify(
