@@ -5,7 +5,7 @@ const upload = require('../middleware/upload.middleware');
 const songController = require('../controller/song.controller');
 
 router.post('/',upload.single('song'),songController.uploadSongController);
-
+router.get('/', songController.getSong);
 
 
 module.exports = router;
