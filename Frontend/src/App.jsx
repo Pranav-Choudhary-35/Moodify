@@ -3,6 +3,7 @@ import {router} from './app.routes'
 import './features/shared/styles/global.scss'
 import { AuthProvider } from './features/auth/auth.context'
 import { useState } from 'react'
+import { SongProvider } from './features/home/song.context'
 
 
 function App() {
@@ -12,7 +13,9 @@ function App() {
 
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <SongProvider>
+        <RouterProvider router={router} />
+      </SongProvider>
     </AuthProvider>
   )
 }

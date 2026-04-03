@@ -16,7 +16,7 @@ const Navigate=useNavigate();
     e.preventDefault();
     await handleLogin({ email, password });
   
-Navigate('/');
+Navigate('/home');
 }
 
 

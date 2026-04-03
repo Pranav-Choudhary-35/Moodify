@@ -1,25 +1,20 @@
-const ImageKit = require('@imagekit/nodejs').default;
+const ImageKit = require("@imagekit/nodejs").default
 require('dotenv').config();
 
 const client = new ImageKit({
-   
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-   
-});
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY
+})
 
-async function uploadFile({buffer,filename,folder=''}){
+async function uploadFile({ buffer, filename, folder = "" }) {
 
-    const file=await client.files.upload({
-        file:await ImageKit.toFile(Buffer.from(buffer)),
-        fileName:filename,
-      folder
-    });
+    const file = await client.files.upload({
+        file: await ImageKit.toFile(Buffer.from(buffer)),
+        fileName: filename,
+        folder
+    })
 
-    return file;
+    return file
 
 }
 
-
-module.exports={
-    uploadFile
-}
+module.exports = { uploadFile }

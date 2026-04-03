@@ -19,8 +19,8 @@ e.preventDefault();
 // Call the register function from useAuth hook here
 await handleRegister({username,email,password});
 
-Navigate('/login');
-// await handleRegister({username,email,password}); 
+Navigate('/');
+
 }
 
 
